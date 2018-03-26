@@ -1,0 +1,30 @@
+<div class="container-fluid bg">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>What's happening?</h2>
+
+      <app-create-message></app-create-message>
+
+      <hr>
+
+      <h2>Timeline</h2>
+
+      <div *ngFor="let message of messages">
+        <app-message [message]="message"></app-message>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <h2>Details</h2>
+
+      <app-statistics></app-statistics>
+
+      <hr>
+
+      <h2>Topics</h2>
+
+      <div *ngFor="let topic of topics">
+        <app-topic [topic]="topic"></app-topic>
+      </div>
+    </div>
+  </div>
+</div>

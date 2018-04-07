@@ -1,5 +1,9 @@
-<div class="panel panel-default">
-  <div class="panel-body">
-    <p>{{topic.name}}</p>
+<div class="row">
+  <div class="col-sm-6">
+    <button class="btn btn-link p-0" (click)="onTopicClick()">#{{topic.name}}</button>
+  </div>
+
+  <div class="col-sm-6">
+    <p class="float-right">{{topic.messages.length}} messages</p>
   </div>
 </div>

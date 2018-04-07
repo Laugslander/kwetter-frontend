@@ -1,0 +1,15 @@
+<div class="card mb-4 box-shadow">
+  <div class="card-body">
+    <div *ngFor="let user of users">
+      <div class="row mb-2">
+        <div class="col-sm-3 border-right">
+          <img class="rounded-circle border d-block mx-auto" src="{{user?.avatar}}" width="50" height="50">
+        </div>
+
+        <div class="col-sm-9 my-auto">
+          <p class="text-primary mb-0"><a routerLink="/profile/{{user?.id}}">{{user?.name}}</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

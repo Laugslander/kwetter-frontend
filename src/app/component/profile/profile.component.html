@@ -1,0 +1,30 @@
+<div class="container-fluid bg">
+  <div class="row">
+    <div class="col-sm-8">
+      <app-banner [user]="user"></app-banner>
+
+      <h3>Messages</h3>
+      <div *ngFor="let message of messages">
+        <app-message [message]="message" (likeMessageEvent)="likeMessageEvent()"
+                     (unlikeMessageEvent)="unlikeMessageEvent()"></app-message>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-primary btn-block mb-4" *ngIf="!isCurrentUser() && !currentUserFollowsUser()"
+              (click)="follow()">Follow
+      </button>
+      <button class="btn btn-default btn-block mb-4" *ngIf="!isCurrentUser() && currentUserFollowsUser()"
+              (click)="unfollow()">Unfollow
+      </button>
+
+      <h3>Details</h3>
+      <app-details [user]="user"></app-details>
+
+      <h3>Followers</h3>
+      <app-users [users]="user?.followers"></app-users>
+
+      <h3>Following</h3>
+      <app-users [users]="user?.followings"></app-users>
+    </div>
+  </div>
+</div>

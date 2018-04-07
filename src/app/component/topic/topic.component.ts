@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Topic} from "../../domain/topic";
 
 @Component({
@@ -8,11 +8,16 @@ import {Topic} from "../../domain/topic";
 })
 export class TopicComponent implements OnInit {
   @Input() topic: Topic;
+  @Output() topicEvent = new EventEmitter<Topic>();
 
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  onTopicClick() {
+    this.topicEvent.emit(this.topic);
   }
 
 }

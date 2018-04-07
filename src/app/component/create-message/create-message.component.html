@@ -1,7 +1,15 @@
-<div class="panel panel-default">
+<div class="panel panel-default mb-3">
   <div class="panel-body">
-    <textarea class="form-control create-message" placeholder="Type in your message" rows="3"></textarea>
-    <h6 class="float-right">{{maxTextCharacters}} characters remaining</h6>
-    <button class="btn btn-primary" type="submit">Post message</button>
+
+    <textarea class="form-control create-message" placeholder="Type in your message" rows="3" name="search"
+              maxlength="{{maxTextCharacters}}" [(ngModel)]="message.text">
+    </textarea>
+
+    <p>
+      <ngb-progressbar type="primary" [value]="totalTextCharacters()">{{maxTextCharacters - messageLength()}}
+      </ngb-progressbar>
+    </p>
+
+    <button class="btn btn-primary" (click)="postMessage()" [disabled]="buttonDisabled()">Post message</button>
   </div>
 </div>

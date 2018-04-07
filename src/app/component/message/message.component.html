@@ -1,9 +1,40 @@
 <div class="card mb-4 box-shadow">
-  <div class="card-header">
-    <p class="my-0">{{message.author.name}}</p>
+  <div class="card-header p-1">
+    <div class="row">
+      <div class="col-sm-1">
+        <img class="rounded-circle d-block mx-auto" src="{{message?.author?.avatar}}" width="50" height="50">
+      </div>
+
+      <div class="col-sm-11 my-auto">
+        <h5 class="card-title mb-0"><a class="text-dark" routerLink="/profile/{{message?.author?.id}}">{{message?.author?.name}}</a>
+        </h5>
+      </div>
+    </div>
   </div>
   <div class="card-body">
-    <p>{{message.text}}</p>
-    <h6 class="float-right">{{message.timestamp}}</h6>
+    <p class="card-text">{{message?.text}}</p>
+
+    <div class="row">
+      <div class="col-sm-1">
+        <button class="btn btn-primary" (click)="unlike()" [hidden]="!liked()">
+          <fa name="fas fa-heart"></fa>
+        </button>
+        <button class="btn btn-light" (click)="like()" [hidden]="liked()">
+          <fa name="fas fa-heart"></fa>
+        </button>
+      </div>
+
+      <div class="col-sm-3 my-auto">
+        <h6 class="text-muted m-0">
+          {{message?.likes?.length}}
+        </h6>
+      </div>
+
+      <div class="col-sm-8 my-auto">
+        <h6 class="text-muted m-0 float-right ">
+          {{message?.timestamp | timeAgo}}
+        </h6>
+      </div>
+    </div>
   </div>
 </div>

@@ -2,7 +2,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from "@angular/common/http";
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {AngularFontAwesomeModule} from 'angular-font-awesome';
 
 import {AppComponent} from './app.component';
 import {TimelineComponent} from './component/timeline/timeline.component';
@@ -12,6 +13,18 @@ import {TopicComponent} from './component/topic/topic.component';
 import {StatisticsComponent} from './component/statistics/statistics.component';
 import {HeaderComponent} from './component/header/header.component';
 import {MessageService} from "./service/message.service";
+import {TopicService} from "./service/topic.service";
+import {AuthService} from "./service/auth.service";
+import {UserService} from "./service/user.service";
+import {AppRoutingModule} from './app-routing.module';
+import {ProfileComponent} from './component/profile/profile.component';
+import {BannerComponent} from './component/banner/banner.component';
+import {StatisticsCountersComponent} from './component/statistics-counters/statistics-counters.component';
+import {DetailsComponent} from './component/details/details.component';
+import {UsersComponent} from './component/users/users.component';
+import {AccountService} from "./service/account.service";
+import {TimeAgoPipe} from "time-ago-pipe";
+import {SearchComponent} from './component/search/search.component';
 
 
 @NgModule({
@@ -22,15 +35,29 @@ import {MessageService} from "./service/message.service";
     MessageComponent,
     TopicComponent,
     StatisticsComponent,
-    HeaderComponent
+    HeaderComponent,
+    ProfileComponent,
+    BannerComponent,
+    StatisticsCountersComponent,
+    DetailsComponent,
+    UsersComponent,
+    TimeAgoPipe,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule,
+    NgbModule.forRoot(),
+    AngularFontAwesomeModule
   ],
   providers: [
-    MessageService
+    AuthService,
+    AccountService,
+    UserService,
+    MessageService,
+    TopicService
   ],
   bootstrap: [AppComponent]
 })

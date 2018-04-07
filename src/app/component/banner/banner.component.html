@@ -1,0 +1,15 @@
+<div class="card mb-4 box-shadow">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-4 border-right">
+        <img class="rounded-circle border d-block mx-auto" src="{{user?.avatar}}" width="150" height="150">
+      </div>
+      <div class="col-sm-8">
+        <h3>{{user?.name}}</h3>
+        <p class="lead">@{{user?.account.username}}</p>
+
+        <app-statistics-counters [currentUser]="user"></app-statistics-counters>
+      </div>
+    </div>
+  </div>
+</div>

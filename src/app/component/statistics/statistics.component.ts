@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {User} from "../../domain/user";
 
 @Component({
   selector: 'app-statistics',
@@ -6,9 +7,7 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./statistics.component.css']
 })
 export class StatisticsComponent implements OnInit {
-  messageCount = 15;
-  followingCount = 10;
-  followerCount = 5;
+  @Input() currentUser: User;
 
   constructor() {
   }

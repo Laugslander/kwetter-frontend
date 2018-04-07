@@ -1,7 +1,7 @@
 <div>
-  <app-header></app-header>
+  <app-header (searchEvent)="searchEvent($event)"></app-header>
 
   <div class="container">
-    <app-timeline></app-timeline>
+    <router-outlet></router-outlet>
   </div>
 </div>

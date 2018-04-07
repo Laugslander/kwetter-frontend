@@ -1,19 +1,9 @@
-<div class="panel panel-default">
-  <div class="panel-body">
-    <p>Messages {{messageCount}}</p>
+<div class="card mb-4 box-shadow">
+  <div class="card-body">
+    <h4>{{currentUser?.name}}</h4>
+    <p>@{{currentUser?.account?.username}}</p>
+    <hr>
 
-    <app-message></app-message>
-    <div class="row">
-      <div class="col-sm-6">
-        <p>
-          Following {{followingCount}}
-        </p>
-      </div>
-      <div class="col-sm-6">
-        <p>
-          Followers {{followerCount}}
-        </p>
-      </div>
-    </div>
+    <app-statistics-counters [currentUser]="currentUser"></app-statistics-counters>
   </div>
 </div>

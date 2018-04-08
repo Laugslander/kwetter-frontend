@@ -25,6 +25,7 @@ import {UsersComponent} from './component/users/users.component';
 import {AccountService} from "./service/account.service";
 import {TimeAgoPipe} from "time-ago-pipe";
 import {SearchComponent} from './component/search/search.component';
+import {LoginComponent} from './component/login/login.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import {SearchComponent} from './component/search/search.component';
     DetailsComponent,
     UsersComponent,
     TimeAgoPipe,
-    SearchComponent
+    SearchComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

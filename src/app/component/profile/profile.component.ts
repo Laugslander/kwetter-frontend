@@ -11,6 +11,7 @@ import {UserService} from "../../service/user.service";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  id;
   currentUser: User;
   user: User;
   messages: Message[];
@@ -21,17 +22,20 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadData()
+    this.loadData();
+
+    this.route.params.subscribe(params => {
+      this.id = params["id"];
+      this.loadData();
+    });
   }
 
   follow() {
-    this.userService.follow(this.user.id, this.currentUser.id).subscribe();
-    this.loadData()
+    this.userService.follow(this.user.id, this.currentUser.id).subscribe(() => this.loadData());
   }
 
   unfollow() {
-    this.userService.unfollow(this.user.id, this.currentUser.id).subscribe();
-    this.loadData()
+    this.userService.unfollow(this.user.id, this.currentUser.id).subscribe(() => this.loadData());
   }
 
   isCurrentUser() {
@@ -53,17 +57,13 @@ export class ProfileComponent implements OnInit {
   loadData() {
     this.authService.getUser().subscribe(u => this.currentUser = u);
 
-    this.authService.getUser().subscribe(u => this.user = u);
-    this.authService.getMessagesPersonal().subscribe(m => this.messages = m);
-
-    this.route.params.subscribe(params => {
-      const id = params["id"];
-
-      if (id) {
-        this.userService.getUser(id).subscribe(u => this.user = u);
-        this.userService.getMessagesPersonal(id).subscribe(m => this.messages = m);
-      }
-    });
+    if (this.id == null) {
+      this.authService.getUser().subscribe(u => this.user = u);
+      this.authService.getMessagesPersonal().subscribe(m => this.messages = m);
+    } else {
+      this.userService.getUser(this.id).subscribe(u => this.user = u);
+      this.userService.getMessagesPersonal(this.id).subscribe(m => this.messages = m);
+    }
   }
 
 }

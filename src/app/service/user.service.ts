@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {HttpClient} from "@angular/common/http";
 import {Message} from "../domain/message";
-import {AuthService} from "./auth.service";
 import {User} from "../domain/user";
 import {environment} from "../../environments/environment";
 
@@ -11,29 +10,36 @@ export class UserService {
 
   private resource: string;
 
-  constructor(private http: HttpClient,
-              private authService: AuthService) {
+  constructor(private http: HttpClient) {
 
     this.resource = environment.api + 'users/'
   }
 
-  getUser(userId: Number): Observable<User> {
-    return this.http.get<User>(this.resource + userId)
+  getUser(id): Observable<User> {
+    return this.http.get<User>(this.resource + id)
   }
 
-  getMessagesPersonal(id: Number): Observable<Message[]> {
+  getMessagesTimeline(id): Observable<Message[]> {
+    return this.http.get<Message[]>(this.resource + id + '/messagesTimeline')
+  }
+
+  getMessagesPersonal(id): Observable<Message[]> {
     return this.http.get<Message[]>(this.resource + id + '/messagesPersonal')
   }
 
-  follow(id: Number, followerId: Number): Observable<User> {
+  getMessagesMentioned(id): Observable<Message[]> {
+    return this.http.get<Message[]>(this.resource + id + '/messagesMentioned')
+  }
+
+  follow(id, followerId): Observable<User> {
     return this.http.post<User>(this.resource + id + '/followers/' + followerId, null)
   }
 
-  unfollow(id: Number, unfollowerId: Number): Observable<User> {
+  unfollow(id, unfollowerId): Observable<User> {
     return this.http.delete<User>(this.resource + id + '/followers/' + unfollowerId)
   }
 
-  searchUsers(searchString: String): Observable<User[]> {
+  searchUsers(searchString): Observable<User[]> {
     return this.http.get<User[]>(this.resource + 'search/' + searchString)
   }
 

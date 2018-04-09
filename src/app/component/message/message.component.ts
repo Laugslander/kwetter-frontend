@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Message} from "../../domain/message";
 import {User} from "../../domain/user";
 import {MessageService} from "../../service/message.service";
-import {AuthService} from "../../service/auth.service";
+import {UserService} from "../../service/user.service";
 
 @Component({
   selector: 'app-message',
@@ -15,12 +15,12 @@ export class MessageComponent implements OnInit {
   @Output() likeMessageEvent = new EventEmitter();
   @Output() unlikeMessageEvent = new EventEmitter();
 
-  constructor(private authService: AuthService,
+  constructor(private userService: UserService,
               private messageService: MessageService) {
   }
 
   ngOnInit() {
-    this.authService.getUser().subscribe(u => this.currentUser = u);
+    this.loadData()
   }
 
   like() {
@@ -34,6 +34,12 @@ export class MessageComponent implements OnInit {
   liked(): Boolean {
     const likes = this.message.likes;
     return likes != null && likes.map(u => u.id).includes(this.currentUser.id)
+  }
+
+  loadData() {
+    const id = sessionStorage.getItem('id');
+
+    this.userService.getUser(id).subscribe(u => this.currentUser = u);
   }
 
 }

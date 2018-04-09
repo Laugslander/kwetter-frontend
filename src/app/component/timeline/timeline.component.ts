@@ -5,6 +5,8 @@ import {TopicService} from "../../service/topic.service";
 import {User} from "../../domain/user";
 import {AuthService} from "../../service/auth.service";
 import {NgbTabset} from "@ng-bootstrap/ng-bootstrap";
+import {UserService} from "../../service/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-timeline',
@@ -21,12 +23,18 @@ export class TimelineComponent implements OnInit {
   topics: Topic[];
   topic: Topic;
 
-  constructor(private authService: AuthService,
+  constructor(private router: Router,
+              private authService: AuthService,
+              private userService: UserService,
               private topicService: TopicService) {
   }
 
   ngOnInit() {
-    this.loadData()
+    if (this.authService.loggedIn()) {
+      this.loadData()
+    } else {
+      this.router.navigate(['login'])
+    }
   }
 
   ngAfterViewChecked() {
@@ -57,9 +65,11 @@ export class TimelineComponent implements OnInit {
   }
 
   loadData() {
-    this.authService.getUser().subscribe(u => this.currentUser = u);
-    this.authService.getMessagesTimeline().subscribe(m => this.messages = m);
-    this.authService.getMessagesMentioned().subscribe(m => this.mentions = m);
+    const id = sessionStorage.getItem('id');
+
+    this.userService.getUser(id).subscribe(u => this.currentUser = u);
+    this.userService.getMessagesTimeline(id).subscribe(m => this.messages = m);
+    this.userService.getMessagesMentioned(id).subscribe(m => this.mentions = m);
     this.topicService.getTrendingTopics().subscribe(t => this.topics = t);
 
     if (this.topic != null) {

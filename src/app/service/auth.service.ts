@@ -1,35 +1,33 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Message} from "../domain/message";
 import {Observable} from "rxjs/Observable";
-import {User} from "../domain/user";
 import {environment} from "../../environments/environment";
+import {Credential} from "../domain/credential";
 
 @Injectable()
 export class AuthService {
 
-  private userId = 2;
-
   private resource: string;
 
   constructor(private http: HttpClient) {
-    this.resource = environment.api + 'users/'
+    this.resource = environment.api + 'accounts/'
   }
 
-  getUser(): Observable<User> {
-    return this.http.get<User>(this.resource + this.userId)
+  logIn(username: String, password: String): Observable<Credential> {
+    let data = {
+      username: username,
+      password: password
+    };
+
+    return this.http.post<Credential>(this.resource + 'login', data)
   }
 
-  getMessagesTimeline(): Observable<Message[]> {
-    return this.http.get<Message[]>(this.resource + this.userId + '/messagesTimeline')
+  logOut() {
+    sessionStorage.clear();
   }
 
-  getMessagesPersonal(): Observable<Message[]> {
-    return this.http.get<Message[]>(this.resource + this.userId + '/messagesPersonal')
-  }
-
-  getMessagesMentioned(): Observable<Message[]> {
-    return this.http.get<Message[]>(this.resource + this.userId + '/messagesMentioned')
+  loggedIn() {
+    return sessionStorage.getItem('id') != null;
   }
 
 }

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {User} from "../../domain/user";
 import {AuthService} from "../../service/auth.service";
 import {Message} from "../../domain/message";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../service/user.service";
 
 @Component({
@@ -16,18 +16,21 @@ export class ProfileComponent implements OnInit {
   user: User;
   messages: Message[];
 
-  constructor(private route: ActivatedRoute,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
               private authService: AuthService,
               private userService: UserService) {
   }
 
   ngOnInit() {
-    this.loadData();
-
-    this.route.params.subscribe(params => {
-      this.id = params["id"];
-      this.loadData();
-    });
+    if (this.authService.loggedIn()) {
+      this.route.params.subscribe(params => {
+        this.id = params["id"];
+        this.loadData();
+      });
+    } else {
+      this.router.navigate(['login'])
+    }
   }
 
   follow() {
@@ -39,6 +42,10 @@ export class ProfileComponent implements OnInit {
   }
 
   isCurrentUser() {
+    if (this.currentUser == null) {
+      return false
+    }
+
     return this.user != null && this.currentUser.id == this.user.id
   }
 
@@ -55,15 +62,13 @@ export class ProfileComponent implements OnInit {
   }
 
   loadData() {
-    this.authService.getUser().subscribe(u => this.currentUser = u);
-
-    if (this.id == null) {
-      this.authService.getUser().subscribe(u => this.user = u);
-      this.authService.getMessagesPersonal().subscribe(m => this.messages = m);
-    } else {
-      this.userService.getUser(this.id).subscribe(u => this.user = u);
-      this.userService.getMessagesPersonal(this.id).subscribe(m => this.messages = m);
+    const currentId = sessionStorage.getItem('id');
+    if (currentId != null) {
+      this.userService.getUser(currentId).subscribe(u => this.currentUser = u);
     }
+
+    this.userService.getUser(this.id).subscribe(u => this.user = u);
+    this.userService.getMessagesPersonal(this.id).subscribe(m => this.messages = m);
   }
 
 }

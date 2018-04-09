@@ -3,12 +3,14 @@
 
   <nav class="my-2 my3">
     <a routerLink="/timeline" class="text-primary">Timeline</a>
-    <a routerLink="/profile" class="p-3 text-primary">Profile</a>
+    <a routerLink="{{showProfile()}}" class="p-3 text-primary">Profile</a>
   </nav>
 
   <div class="form-inline mt-2 mt-md-0">
     <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="searchString"
            (keydown)="onKeydown($event)">
-    <a routerLink="/login" class="btn btn-outline-primary">Log in</a>
+
+    <a routerLink="/login" class="btn btn-outline-primary" *ngIf="!loggedIn()">Log in</a>
+    <a routerLink="/login" class="btn btn-outline-primary" *ngIf="loggedIn()" (click)="logOut()">Log out</a>
   </div>
 </div>

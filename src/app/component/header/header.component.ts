@@ -1,6 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {User} from "../../domain/user";
 import {AuthService} from "../../service/auth.service";
+import {UserService} from "../../service/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -13,13 +15,15 @@ export class HeaderComponent implements OnInit {
   currentUser: User;
   searchString: String;
 
-  constructor(private authService: AuthService) {
+  constructor(private router: Router,
+              private authService: AuthService,
+              private userService: UserService) {
   }
 
   ngOnInit() {
     this.searchString = '';
 
-    this.authService.getUser().subscribe(u => this.currentUser = u);
+    this.loadData();
   }
 
   onKeydown(event) {
@@ -29,4 +33,29 @@ export class HeaderComponent implements OnInit {
       this.searchString = ''
     }
   }
+
+  logOut() {
+    this.authService.logOut();
+  }
+
+  loggedIn() {
+    return this.authService.loggedIn()
+  }
+
+  showProfile() {
+    if (this.loggedIn()) {
+      const id = sessionStorage.getItem('id');
+
+      return '/profile/' + id
+    } else {
+      return 'login'
+    }
+  }
+
+  loadData() {
+    const id = sessionStorage.getItem('id');
+
+    this.userService.getUser(id).subscribe(u => this.currentUser = u);
+  }
+
 }

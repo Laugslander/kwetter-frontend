@@ -9,7 +9,6 @@ const routes: Routes = [
   {path: '', redirectTo: '/timeline', pathMatch: 'full'},
   {path: 'timeline', component: TimelineComponent},
   {path: 'profile/:id', component: ProfileComponent},
-  {path: 'profile', component: ProfileComponent},
   {path: 'search/:searchString', component: SearchComponent},
   {path: 'login', component: LoginComponent}
 ];

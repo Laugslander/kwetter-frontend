@@ -1,6 +1,6 @@
 <div class="card mb-4 box-shadow">
   <div class="card-body">
-    <h4>{{currentUser?.name}}</h4>
+    <h4><a class="text-dark" routerLink="/profile/{{currentUser?.id}}">{{currentUser?.name}}</a></h4>
     <p>@{{currentUser?.account?.username}}</p>
     <hr>
 

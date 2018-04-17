@@ -26,7 +26,7 @@ import {AccountService} from "./service/account.service";
 import {TimeAgoPipe} from "time-ago-pipe";
 import {SearchComponent} from './component/search/search.component';
 import {LoginComponent} from './component/login/login.component';
-
+import {WebsocketService} from "./service/websocket.service";
 
 @NgModule({
   declarations: [
@@ -59,7 +59,8 @@ import {LoginComponent} from './component/login/login.component';
     AccountService,
     UserService,
     MessageService,
-    TopicService
+    TopicService,
+    WebsocketService
   ],
   bootstrap: [AppComponent]
 })

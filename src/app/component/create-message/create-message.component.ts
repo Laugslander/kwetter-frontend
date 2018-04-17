@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MessageService} from "../../service/message.service";
 import {User} from "../../domain/user";
 import {Message} from "../../domain/message";
+import {WebsocketService} from "../../service/websocket.service";
 
 @Component({
   selector: 'app-create-message',
@@ -15,7 +16,8 @@ export class CreateMessageComponent implements OnInit {
   maxTextCharacters = 140;
   message = new Message();
 
-  constructor(private messageService: MessageService) {
+  constructor(private webSocketService: WebsocketService,
+              private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -33,6 +35,8 @@ export class CreateMessageComponent implements OnInit {
     this.messageService.postMessage(this.message).subscribe(() => this.createMessageEvent.emit());
 
     this.message.text = "";
+
+    this.webSocketService.sendMessage(sessionStorage.getItem('id'))
   }
 
   totalTextCharacters(): Number {

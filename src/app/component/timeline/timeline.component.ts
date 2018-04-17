@@ -7,6 +7,7 @@ import {AuthService} from "../../service/auth.service";
 import {NgbTabset} from "@ng-bootstrap/ng-bootstrap";
 import {UserService} from "../../service/user.service";
 import {Router} from "@angular/router";
+import {WebsocketService} from "../../service/websocket.service";
 
 @Component({
   selector: 'app-timeline',
@@ -26,7 +27,10 @@ export class TimelineComponent implements OnInit {
   constructor(private router: Router,
               private authService: AuthService,
               private userService: UserService,
-              private topicService: TopicService) {
+              private topicService: TopicService,
+              private webSocketService: WebsocketService) {
+
+    this.webSocketService.getSocket().addEventListener('message', () => this.loadData());
   }
 
   ngOnInit() {

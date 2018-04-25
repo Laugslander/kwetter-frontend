@@ -30,7 +30,9 @@ export class TimelineComponent implements OnInit {
               private topicService: TopicService,
               private webSocketService: WebsocketService) {
 
-    this.webSocketService.getSocket().addEventListener('message', () => this.loadData());
+    this.webSocketService.getSocket().addEventListener('message', message => {
+      this.loadData()
+    });
   }
 
   ngOnInit() {

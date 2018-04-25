@@ -11,10 +11,6 @@ export class WebsocketService {
     this.socket = new WebSocket(environment.websocket + sessionStorage.getItem('id'));
   }
 
-  sendMessage(id: String) {
-    this.socket.send(id);
-  }
-
   getSocket() {
     return this.socket;
   }

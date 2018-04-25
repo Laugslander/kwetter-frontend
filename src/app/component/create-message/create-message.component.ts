@@ -35,8 +35,6 @@ export class CreateMessageComponent implements OnInit {
     this.messageService.postMessage(this.message).subscribe(() => this.createMessageEvent.emit());
 
     this.message.text = "";
-
-    this.webSocketService.sendMessage(sessionStorage.getItem('id'))
   }
 
   totalTextCharacters(): Number {

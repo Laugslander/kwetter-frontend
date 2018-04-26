@@ -29,10 +29,6 @@ export class TimelineComponent implements OnInit {
               private userService: UserService,
               private topicService: TopicService,
               private webSocketService: WebsocketService) {
-
-    this.webSocketService.getSocket().addEventListener('message', message => {
-      this.loadData()
-    });
   }
 
   ngOnInit() {
@@ -41,6 +37,8 @@ export class TimelineComponent implements OnInit {
     } else {
       this.router.navigate(['login'])
     }
+
+    this.webSocketService.getSocket().addEventListener('message', m => this.messages.unshift(JSON.parse(m.data)));
   }
 
   ngAfterViewChecked() {

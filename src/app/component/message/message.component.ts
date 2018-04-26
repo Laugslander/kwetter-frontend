@@ -33,7 +33,7 @@ export class MessageComponent implements OnInit {
 
   liked(): Boolean {
     const likes = this.message.likes;
-    return likes != null && likes.map(u => u.id).includes(this.currentUser.id)
+    return likes && this.currentUser && likes.map(u => u.id).includes(this.currentUser.id)
   }
 
   loadData() {
